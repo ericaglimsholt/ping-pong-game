@@ -37,18 +37,21 @@ let ball = {
 };
 
 // Create player rackets
+const playerWidth = 15;
+const playerHeight = 200;
+
 class Player {
   constructor (color, x, y) {
     this.color = color;
     this.x = x;
     this.y = y;
-    this.height = 200;
-    this.width = 15;
+    this.height = playerHeight;
+    this.width = playerWidth;
     this.velocity = { up: -10, down: 10 };
   }
 }
-const playerOne = new Player('#00cc66', 0, canvas.height / 2 - 100);
-const playerTwo = new Player('#fff44f', canvas.width - 15, canvas.height / 2 - 100);
+const playerOne = new Player('#00cc66', 0, canvas.height / 2 - playerHeight / 2);
+const playerTwo = new Player('#fff44f', canvas.width - playerWidth, canvas.height / 2 - playerHeight / 2);
 
 let playerOneButtons = {
   'left': false,
@@ -88,7 +91,7 @@ window.addEventListener('keyup', (event) => {
 let scorePlayerOne = 0;
 let scorePlayerTwo = 0;
 
-function mainLoop () {
+function drawGame () {
   // draw board background
   context.fillStyle = '#333';
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -106,7 +109,9 @@ function mainLoop () {
   context.fillStyle = ball.color;
   context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
   context.fill();
+}
 
+function movePlayers () {
   // players movement - move up and down on buttons click
   if (playerOneButtons.left) {
     if (playerOne.y + playerOne.height < canvas.height) {
@@ -128,61 +133,80 @@ function mainLoop () {
       playerTwo.y += playerTwo.velocity.up;
     }
   }
-  if (gameStarted) {
-    // Update the x and y of the ball cordinates based on the velocity
-    ball.x += ball.velocity.x;
-    ball.y += ball.velocity.y;
-    // Check if the ball collides at the top
-    if (ball.y + ball.radius > canvas.height) {
-      ball.velocity.y = -ball.velocity.y;
-    }
-    // Check if the ball collides at the bottom
-    if (ball.y <= ball.radius) {
-      ball.velocity.y = Math.abs(ball.velocity.y);
-    }
-    // Check if the ball collides with player one
-    if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - 15 <= ball.radius) {
-      ball.velocity.x = Math.abs(ball.velocity.x - 1);
-    }
-    // Check if the ball collides with player two
-    if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + 15 >= canvas.width) {
-      ball.velocity.x = -ball.velocity.x - 1;
-    }
-    // Start new round if one of the platyers misses the ball
-    if (ball.x + ball.radius < -5 || ball.x - ball.radius > canvas.width + 5) {
-      if (ball.x + ball.radius < -5) {
-        // add score to player two on score board
-        scorePlayerTwo++;
-        playerTwoScoreBoard.innerText = scorePlayerTwo;
-      } else {
-        // add score to player one on score board
-        scorePlayerOne++;
-        playerOneScoreBoard.innerText = scorePlayerOne;
-      }
-      gameStarted = false;
-      // put ball back in the center to get ready for a new round
-      ball.x = canvas.width / 2;
-      ball.y = canvas.height / 2;
-      ball.velocity.x = randomDirection(-5, 5);
-      ball.velocity.y = randomInt(-5, 5);
-    }
-  }
+}
 
+function moveBall () {
+  // Update the x and y of the ball cordinates based on the velocity
+  // calculate with delta time
+  ball.x += ball.velocity.x;
+  ball.y += ball.velocity.y;
+  // Check if the ball collides at the top
+  if (ball.y + ball.radius > canvas.height) {
+    ball.velocity.y *= -1;
+  }
+  // Check if the ball collides at the bottom
+  if (ball.y <= ball.radius) {
+    ball.velocity.y *= -1;
+  }
+  // Check if the ball collides with player one
+  if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - playerWidth <= ball.radius) {
+    ball.velocity.x = Math.abs(ball.velocity.x - 1);
+  }
+  // Check if the ball collides with player two
+  if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
+    ball.velocity.x = -ball.velocity.x - 1;
+  }
+}
+
+function countScores () {
+  // Start new round if one of the platyers misses the ball
+  if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
+    if (ball.x + ball.radius < 0) {
+      // add score to player two on score board
+      scorePlayerTwo++;
+      playerTwoScoreBoard.innerText = scorePlayerTwo;
+    } else {
+      // add score to player one on score board
+      scorePlayerOne++;
+      playerOneScoreBoard.innerText = scorePlayerOne;
+    }
+    gameStarted = false;
+    // put ball back in the center to get ready for a new round
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.velocity.x = randomDirection(-5, 5);
+    ball.velocity.y = randomInt(-5, 5);
+  }
+}
+
+function isGameFinished () {
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 5) {
+  if (scorePlayerOne >= 1) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
-  } else if (scorePlayerTwo >= 5) {
+  } else if (scorePlayerTwo >= 1) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
   } else {
     window.requestAnimationFrame(mainLoop);
   }
 }
+
+function mainLoop () {
+  drawGame();
+  movePlayers();
+
+  if (gameStarted) {
+    moveBall();
+    countScores();
+  }
+  isGameFinished();
+}
 mainLoop();
 
-// Reset positions and scores when starting a new game
-restartButton.addEventListener('click', function (event) {
+function resetGame () {
+  // Reset positions and scores when starting a new game
+  gameStarted = false;
   scorePlayerOne = 0;
   scorePlayerTwo = 0;
   playerOneScoreBoard.innerText = scorePlayerOne;
@@ -193,11 +217,14 @@ restartButton.addEventListener('click', function (event) {
 
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
-  ball.velocity.x = randomDirection(-5, 5);
-  ball.velocity.y = randomInt(-5, 5);
+  ball.velocity.x = randomDirection(-4, 4);
+  ball.velocity.y = randomInt(-4, 4);
 
-  playerOne.y = canvas.height / 2 - 100;
-  playerTwo.y = canvas.height / 2 - 100;
+  playerOne.y = canvas.height / 2 - playerHeight / 2;
+  playerTwo.y = canvas.height / 2 - playerHeight / 2;
+}
 
+restartButton.addEventListener('click', function (event) {
+  resetGame();
   mainLoop();
 });
