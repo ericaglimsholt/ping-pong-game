@@ -21,7 +21,7 @@ function randomInt (min, max) {
   return Math.random() * (max - min) + min;
 }
 function randomDirection (left, right) {
-  return Math.random() < 0.5 ? right : left;
+  return Math.random() < 0.5 ? left : right;
 }
 
 // Create ball
