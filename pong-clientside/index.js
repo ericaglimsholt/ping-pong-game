@@ -137,7 +137,7 @@ function movePlayers () {
 
 function moveBall () {
   // Update the x and y of the ball cordinates based on the velocity
-  // calculate with delta time
+  // TODO: calculate with delta time
   ball.x += ball.velocity.x;
   ball.y += ball.velocity.y;
   // Check if the ball collides at the top
@@ -158,10 +158,18 @@ function moveBall () {
   }
 }
 
+function resetBall () {
+  // put ball back in the center to get ready for a new round
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+  ball.velocity.x = randomDirection(-4, 4);
+  ball.velocity.y = randomInt(-4, 4);
+}
+
 function countScores () {
-  // Start new round if one of the platyers misses the ball
-  if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
-    if (ball.x + ball.radius < 0) {
+  // Start new round if one of the players misses the ball
+  if (ball.x + ball.radius <= 0 || ball.x - ball.radius >= canvas.width) {
+    if (ball.x + ball.radius <= 0) {
       // add score to player two on score board
       scorePlayerTwo++;
       playerTwoScoreBoard.innerText = scorePlayerTwo;
@@ -171,11 +179,7 @@ function countScores () {
       playerOneScoreBoard.innerText = scorePlayerOne;
     }
     gameStarted = false;
-    // put ball back in the center to get ready for a new round
-    ball.x = canvas.width / 2;
-    ball.y = canvas.height / 2;
-    ball.velocity.x = randomDirection(-5, 5);
-    ball.velocity.y = randomInt(-5, 5);
+    resetBall();
   }
 }
 
@@ -215,11 +219,8 @@ function resetGame () {
   winnerBox.classList.remove('show');
   startInstructionsBox.classList.add('show');
 
-  ball.x = canvas.width / 2;
-  ball.y = canvas.height / 2;
-  ball.velocity.x = randomDirection(-4, 4);
-  ball.velocity.y = randomInt(-4, 4);
-
+  resetBall();
+  // reset players
   playerOne.y = canvas.height / 2 - playerHeight / 2;
   playerTwo.y = canvas.height / 2 - playerHeight / 2;
 }
