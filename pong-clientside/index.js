@@ -1,15 +1,11 @@
 'use strict';
 
-// create canvas game board
+// Create canvas game board inside #canvas-wrap
 const canvas = document.createElement('canvas');
 document.getElementById('canvas-wrap').appendChild(canvas);
-
-// document.body.appendChild(canvas);
 const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-// canvas.style.height = `${canvas.height / 2}px`;
-// canvas.style.width = `${canvas.width / 2}px`;
 
 // get all the html elements we need
 const startInstructionsBox = document.querySelector('.start')

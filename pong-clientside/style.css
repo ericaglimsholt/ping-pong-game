@@ -3,12 +3,47 @@ body {
   overflow: hidden;
 }
 
-.seperator {
+#canvas-wrap {
+  position:relative;
+}
+
+.overlay {
+  width: 100%;
+  height: 100vh;
+  position:absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.player-one-score h2{
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+   -moz-transform: rotate(90deg);
+   -o-transform: rotate(90deg);
+   -ms-transform: rotate(90deg);
+}
+
+.player-two-score h2{
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+   -moz-transform: rotate(-90deg);
+   -o-transform: rotate(-90deg);
+   -ms-transform: rotate(-90deg);
+}
+
+h2 {
+  font-size: 400px;
+  margin: 0;
+}
+
+/*.seperator {
   left: 50%;
   border: 2px solid #000000;
   position: absolute;
   height: 100vh;
-}
+}*/
 
 /*.score-board {
   position: fixed;
