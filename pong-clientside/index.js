@@ -47,8 +47,9 @@ class Player {
     this.velocity = { up: -10, down: 10 };
   }
 }
+
 const playerOne = new Player('#000000', 0, canvas.height / 2 - 100);
-const playerTwo = new Player('#000000', canvas.width - 15, canvas.height / 2 - 100);
+const playerTwo = new Player('#000000', canvas.width - 30, canvas.height / 2 - 100);
 
 let playerOneButtons = {
   'AL': false,
