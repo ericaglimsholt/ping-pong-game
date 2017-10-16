@@ -29,8 +29,8 @@ let ball = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   velocity: {
-    x: randomDirection(-2, 2),
-    y: randomInt(-2, 2)
+    x: randomDirection(-4, 4),
+    y: randomInt(-4, 4)
   }
 };
 
