@@ -10,7 +10,7 @@ canvas.width = window.innerWidth;
 // canvas.style.width = `${canvas.width / 2}px`;
 
 // get all the html elements we need
-const startInstructionsBox = document.querySelector('.start')
+const startInstructionsBox = document.querySelector('.start');
 const winnerBox = document.querySelector('.winner');
 const restartButton = document.querySelector('.restart');
 const playerOneScoreBoard = document.querySelector('.player-one');
@@ -51,28 +51,28 @@ const playerOne = new Player('#00cc66', 0, canvas.height / 2 - 100);
 const playerTwo = new Player('#fff44f', canvas.width - 15, canvas.height / 2 - 100);
 
 let playerOneButtons = {
-  'AL': false,
-  'AR': false
-}
+  'left': false,
+  'right': false
+};
 let playerTwoButtons = {
-  'BL': false,
-  'BR': false
-}
+  'left': false,
+  'right': false
+};
 
 // If the players press the valid button, set button to true
 window.addEventListener('keydown', (event) => {
-  if (event.keyCode === 65) playerOneButtons.AL = true;
-  if (event.keyCode === 68) playerOneButtons.AR = true;
-  if (event.keyCode === 37) playerTwoButtons.BL = true;
-  if (event.keyCode === 39) playerTwoButtons.BR = true;
+  if (event.keyCode === 65) playerOneButtons.left = true;
+  if (event.keyCode === 68) playerOneButtons.right = true;
+  if (event.keyCode === 37) playerTwoButtons.left = true;
+  if (event.keyCode === 39) playerTwoButtons.right = true;
 });
 
 // Listen to the players keyup, set button to false
 window.addEventListener('keyup', (event) => {
-  if (event.keyCode === 65) playerOneButtons.AL = false;
-  if (event.keyCode === 68) playerOneButtons.AR = false;
-  if (event.keyCode === 37) playerTwoButtons.BL = false;
-  if (event.keyCode === 39) playerTwoButtons.BR = false;
+  if (event.keyCode === 65) playerOneButtons.left = false;
+  if (event.keyCode === 68) playerOneButtons.right = false;
+  if (event.keyCode === 37) playerTwoButtons.left = false;
+  if (event.keyCode === 39) playerTwoButtons.right = false;
 });
 
 // If press spacebar the game begin
@@ -108,22 +108,22 @@ function mainLoop () {
   context.fill();
 
   // players movement - check if buttons are pressed
-  if (playerOneButtons.AL) {
+  if (playerOneButtons.left) {
     if (playerOne.y + playerOne.height < canvas.height) {
       playerOne.y += playerOne.velocity.down;
     }
   }
-  if (playerOneButtons.AR) {
+  if (playerOneButtons.right) {
     if (playerOne.y > 0) {
       playerOne.y += playerOne.velocity.up;
     }
   }
-  if (playerTwoButtons.BL) {
+  if (playerTwoButtons.left) {
     if (playerTwo.y + playerTwo.height < canvas.height) {
       playerTwo.y += playerTwo.velocity.down;
     }
   }
-  if (playerTwoButtons.BR) {
+  if (playerTwoButtons.right) {
     if (playerTwo.y > 0) {
       playerTwo.y += playerTwo.velocity.up;
     }
