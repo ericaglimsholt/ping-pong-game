@@ -7,12 +7,26 @@ const context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-function randomInt(min, max) {
+function randomInt (min, max) {
   return Math.random() * (max - min) + min;
 }
+function randomDirection (left, right) {
+  return Math.random() < 0.5 ? right : left;
+}
+
+let ball = {
+  radius: 20,
+  color: '#fff',
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  velocity: {
+    x: randomDirection(-5, 5),
+    y: randomInt(-5, 5)
+  }
+};
 
 class Player {
-  constructor(color, x, y) {
+  constructor (color, x, y) {
     this.color = color;
     this.x = x;
     this.y = y;
@@ -21,17 +35,6 @@ class Player {
     this.velocity = { up: -10, down: 10 };
   }
 }
-  let ball = {
-    radius: 20,
-    color: '#fff',
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    velocity: {
-      x: 5,
-      y: randomInt(-5, 5)
-    }
-  };
-
 
 const playerOne = new Player('#00cc66', 0, canvas.height / 2 - 100);
 const playerTwo = new Player('#fff44f', canvas.width - 30, canvas.height / 2 - 100);
@@ -58,18 +61,24 @@ window.addEventListener('keyup', (event) => {
   if (event.keyCode === 68) playerOneButtons.AR = false;
   if (event.keyCode === 37) playerTwoButtons.BL = false;
   if (event.keyCode === 39) playerTwoButtons.BR = false;
+});
 
+let gameStarted = false;
+window.addEventListener('keyup', (event) => {
+  if (event.keyCode === 32) {
+    gameStarted = true;
+  }
 });
 
 (function mainLoop () {
   // set board background
   context.fillStyle = '#333';
   context.fillRect(0, 0, canvas.width, canvas.height);
-
+  // draw player one
   context.beginPath();
   context.fillStyle = playerOne.color;
   context.fillRect(playerOne.x, playerOne.y, playerOne.width, playerOne.height);
-
+  // draw player two
   context.beginPath();
   context.fillStyle = playerTwo.color;
   context.fillRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height);
@@ -80,10 +89,7 @@ window.addEventListener('keyup', (event) => {
   context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
   context.fill();
 
-  // Update the x and y cordinates based on the velocity.
-  ball.x += ball.velocity.x;
-  ball.y += ball.velocity.y;
-
+  // players
   if (playerOneButtons.AL) {
     if (playerOne.y + playerOne.height < canvas.height) {
       playerOne.y += playerOne.velocity.down;
@@ -104,5 +110,35 @@ window.addEventListener('keyup', (event) => {
       playerTwo.y += playerTwo.velocity.up;
     }
   }
+  if (gameStarted) {
+    // Update the x and y of the ball cordinates based on the velocity.
+    ball.x += ball.velocity.x;
+    ball.y += ball.velocity.y;
+    // Check if the ball collides to the top.
+    if (ball.y + ball.radius > canvas.height) {
+      ball.velocity.y = -ball.velocity.y;
+    }
+    // Check if the ball collides to the bottom.
+    if (ball.y <= ball.radius) {
+      ball.velocity.y = Math.abs(ball.velocity.y);
+    }
+    // Check if the ball collides with player one
+    if (ball.y > playerOne.y && ball.y < playerOne.y + playerOne.height && ball.x - 30 <= ball.radius) {
+      ball.velocity.x = Math.abs(ball.velocity.x - 1);
+    }
+    // Check if the ball collides with player two
+    if (ball.y > playerTwo.y && ball.y < playerTwo.y + playerTwo.height && ball.x + ball.radius + 30 > canvas.width) {
+      ball.velocity.x = -ball.velocity.x - 1;
+    }
+    // start new round if player misses the ball
+    if (ball.x < 0 || ball.x - ball.radius > canvas.width) {
+      gameStarted = false;
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+      ball.velocity.x = randomDirection(-5, 5);
+      ball.velocity.y = randomInt(-5, 5);
+    }
+  }
+
   window.requestAnimationFrame(mainLoop);
 })();
