@@ -65,7 +65,7 @@ h2 {
   margin: 0;
   line-height: 2;
 }*/
-/*.winner, .start {
+.winner, .start {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -74,11 +74,11 @@ h2 {
   align-items: center;
   flex-direction: column;
   color: #fff;
-}*/
-
-canvas {
-  background-color: #1F1F1F;
 }
+
+/*canvas {
+  background-color: #1F1F1F;
+}*/
 
 .winner p {
   font-size: 30px;
