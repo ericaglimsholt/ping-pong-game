@@ -2,7 +2,9 @@
 
 // create canvas game board
 const canvas = document.createElement('canvas');
-document.body.appendChild(canvas);
+document.getElementById('canvas-wrap').appendChild(canvas);
+
+// document.body.appendChild(canvas);
 const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
@@ -44,7 +46,7 @@ class Player {
     this.y = y;
     this.height = 170;
     this.width = 30;
-    this.velocity = { up: -10, down: 10 };
+    this.velocity = { up: -7, down: 7 };
   }
 }
 

@@ -3,6 +3,13 @@ body {
   overflow: hidden;
 }
 
+.seperator {
+  left: 50%;
+  border: 2px solid #000000;
+  position: absolute;
+  height: 100vh;
+}
+
 /*.score-board {
   position: fixed;
   top: 0;
