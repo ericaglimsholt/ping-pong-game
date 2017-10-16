@@ -27,7 +27,7 @@ function randomDirection (left, right) {
 // Create ball
 let ball = {
   radius: 20,
-  color: '#f2f2f2',
+  color: '#FFFFFF',
   x: canvas.width / 2,
   y: canvas.height / 2,
   velocity: {
@@ -42,13 +42,13 @@ class Player {
     this.color = color;
     this.x = x;
     this.y = y;
-    this.height = 200;
-    this.width = 15;
+    this.height = 170;
+    this.width = 30;
     this.velocity = { up: -10, down: 10 };
   }
 }
-const playerOne = new Player('#00cc66', 0, canvas.height / 2 - 100);
-const playerTwo = new Player('#fff44f', canvas.width - 15, canvas.height / 2 - 100);
+const playerOne = new Player('#000000', 0, canvas.height / 2 - 100);
+const playerTwo = new Player('#000000', canvas.width - 15, canvas.height / 2 - 100);
 
 let playerOneButtons = {
   'AL': false,
@@ -90,7 +90,7 @@ let scorePlayerTwo = 0;
 
 function mainLoop () {
   // draw board background
-  context.fillStyle = '#333';
+  context.fillStyle = '#1F1F1F';
   context.fillRect(0, 0, canvas.width, canvas.height);
   // draw player one
   context.beginPath();
