@@ -60,7 +60,7 @@ void serialEvent(Serial port)
     }
     if(value.equals("BL1")) {
       btns[2].pressed = true;
-       ws.sendMessage("{ \"button\": \"BL\", \"pressed\": true }");
+      ws.sendMessage("{ \"button\": \"BL\", \"pressed\": true }");
     }
     if(value.equals("BR1")) {
       btns[3].pressed = true;
