@@ -4,8 +4,10 @@
 const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
 const context = canvas.getContext('2d');
-canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+// canvas.style.height = `${canvas.height / 2}px`;
+// canvas.style.width = `${canvas.width / 2}px`;
 
 // get all the html elements we need
 const startInstructionsBox = document.querySelector('.start')
@@ -25,7 +27,7 @@ function randomDirection (left, right) {
 // Create ball
 let ball = {
   radius: 20,
-  color: '#fff',
+  color: '#f2f2f2',
   x: canvas.width / 2,
   y: canvas.height / 2,
   velocity: {

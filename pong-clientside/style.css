@@ -23,9 +23,16 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
-  color: pink;
-  font-size: 4em;
-
+  flex-direction: column;
+  color: #fff;
+}
+.winner p {
+  font-size: 30px;
+}
+.start p {
+  width: 80%;
+  font-size: 30px;
+  text-align: center;
 }
 .show {
   display: flex;
