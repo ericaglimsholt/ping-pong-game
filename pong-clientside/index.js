@@ -9,7 +9,7 @@ canvas.width = window.innerWidth;
 // canvas.style.height = `${canvas.height / 2}px`;
 // canvas.style.width = `${canvas.width / 2}px`;
 
-// get all the html elements we need
+// Get all the html elements needed
 const startInstructionsBox = document.querySelector('.start');
 const winnerBox = document.querySelector('.winner');
 const restartButton = document.querySelector('.restart');
@@ -107,7 +107,7 @@ function mainLoop () {
   context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
   context.fill();
 
-  // players movement - check if buttons are pressed
+  // players movement - move up and down on buttons click
   if (playerOneButtons.left) {
     if (playerOne.y + playerOne.height < canvas.height) {
       playerOne.y += playerOne.velocity.down;
@@ -129,31 +129,33 @@ function mainLoop () {
     }
   }
   if (gameStarted) {
-    // Update the x and y of the ball cordinates based on the velocity.
+    // Update the x and y of the ball cordinates based on the velocity
     ball.x += ball.velocity.x;
     ball.y += ball.velocity.y;
-    // Check if the ball collides to the top.
+    // Check if the ball collides at the top
     if (ball.y + ball.radius > canvas.height) {
       ball.velocity.y = -ball.velocity.y;
     }
-    // Check if the ball collides to the bottom.
+    // Check if the ball collides at the bottom
     if (ball.y <= ball.radius) {
       ball.velocity.y = Math.abs(ball.velocity.y);
     }
     // Check if the ball collides with player one
-    if (ball.y + ball.radius >= playerOne.y && ball.y + ball.radius <= playerOne.y + playerOne.height && ball.x - 15 <= ball.radius) {
+    if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - 15 <= ball.radius) {
       ball.velocity.x = Math.abs(ball.velocity.x - 1);
     }
     // Check if the ball collides with player two
-    if (ball.y + ball.radius >= playerTwo.y && ball.y + ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + 15 >= canvas.width) {
+    if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + 15 >= canvas.width) {
       ball.velocity.x = -ball.velocity.x - 1;
     }
-    // start new round if one of the platyers misses the ball
+    // Start new round if one of the platyers misses the ball
     if (ball.x + ball.radius < -5 || ball.x - ball.radius > canvas.width + 5) {
       if (ball.x + ball.radius < -5) {
+        // add score to player two on score board
         scorePlayerTwo++;
         playerTwoScoreBoard.innerText = scorePlayerTwo;
       } else {
+        // add score to player one on score board
         scorePlayerOne++;
         playerOneScoreBoard.innerText = scorePlayerOne;
       }
@@ -169,17 +171,17 @@ function mainLoop () {
   // Check if one of the players has 5 points, then the game is finished
   if (scorePlayerOne >= 5) {
     winnerBox.classList.add('show');
-    winnerBox.firstChild.innerText = 'Green is the winner';
+    winnerBox.firstChild.innerText = 'Green player is the winner!';
   } else if (scorePlayerTwo >= 5) {
     winnerBox.classList.add('show');
-    winnerBox.firstChild.innerText = 'Yellow is the winner';
+    winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
   } else {
     window.requestAnimationFrame(mainLoop);
   }
 }
 mainLoop();
 
-// reset positions and scores when starting a new game
+// Reset positions and scores when starting a new game
 restartButton.addEventListener('click', function (event) {
   scorePlayerOne = 0;
   scorePlayerTwo = 0;
