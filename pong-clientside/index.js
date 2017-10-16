@@ -70,6 +70,9 @@ window.addEventListener('keyup', (event) => {
   }
 });
 
+let scorePlayerOne = 0;
+let scorePlayerTwo = 0;
+
 (function mainLoop () {
   // set board background
   context.fillStyle = '#333';
@@ -130,13 +133,29 @@ window.addEventListener('keyup', (event) => {
     if (ball.y > playerTwo.y && ball.y < playerTwo.y + playerTwo.height && ball.x + ball.radius + 30 > canvas.width) {
       ball.velocity.x = -ball.velocity.x - 1;
     }
-    // start new round if player misses the ball
-    if (ball.x < 0 || ball.x - ball.radius > canvas.width) {
+    // start new round if ball hits right or left
+    if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
+      if (ball.x + ball.radius < 0) {
+        scorePlayerTwo++;
+        document.querySelector('.player-two').innerText = scorePlayerTwo;
+      } else {
+        scorePlayerOne++;
+        document.querySelector('.player-one').innerText = scorePlayerOne;
+      }
       gameStarted = false;
-      ball.x = canvas.width / 2;
-      ball.y = canvas.height / 2;
-      ball.velocity.x = randomDirection(-5, 5);
-      ball.velocity.y = randomInt(-5, 5);
+      const winnerBox = document.querySelector('.winner');
+      if (scorePlayerOne >= 5) {
+        winnerBox.classList.add('show');
+        winnerBox.firstChild.innerText = 'Green is the winner';
+      } else if (scorePlayerTwo >= 5) {
+        winnerBox.classList.add('show');
+        winnerBox.firstChild.innerText = 'Yellow is the winner';
+      } else {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+        ball.velocity.x = randomDirection(-5, 5);
+        ball.velocity.y = randomInt(-5, 5);
+      }
     }
   }
 
