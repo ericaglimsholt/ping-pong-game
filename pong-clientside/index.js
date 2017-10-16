@@ -79,17 +79,18 @@ window.addEventListener('keyup', (event) => {
 });
 
 // If press spacebar the game begin
-let gameStarted = false;
+let gameRunning = false;
 window.addEventListener('keyup', (event) => {
   if (event.keyCode === 32) {
     startInstructionsBox.classList.remove('show');
-    gameStarted = true;
+    gameRunning = true;
   }
 });
 
 // Score counter
 let scorePlayerOne = 0;
 let scorePlayerTwo = 0;
+let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
@@ -140,11 +141,11 @@ function moveBall () {
   // TODO: calculate with delta time
   ball.x += ball.velocity.x;
   ball.y += ball.velocity.y;
-  // Check if the ball collides at the top
+  // Check if the ball collides at the bottom
   if (ball.y + ball.radius > canvas.height) {
     ball.velocity.y *= -1;
   }
-  // Check if the ball collides at the bottom
+  // Check if the ball collides at the top
   if (ball.y <= ball.radius) {
     ball.velocity.y *= -1;
   }
@@ -168,8 +169,8 @@ function resetBall () {
 
 function countScores () {
   // Start new round if one of the players misses the ball
-  if (ball.x + ball.radius <= 0 || ball.x - ball.radius >= canvas.width) {
-    if (ball.x + ball.radius <= 0) {
+  if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
+    if (ball.x + ball.radius < 0) {
       // add score to player two on score board
       scorePlayerTwo++;
       playerTwoScoreBoard.innerText = scorePlayerTwo;
@@ -178,39 +179,50 @@ function countScores () {
       scorePlayerOne++;
       playerOneScoreBoard.innerText = scorePlayerOne;
     }
-    gameStarted = false;
-    resetBall();
+    gameRunning = false;
+    return true;
+  } else {
+    return false;
   }
 }
 
 function isGameFinished () {
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 1) {
+  if (scorePlayerOne >= 2) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
-  } else if (scorePlayerTwo >= 1) {
+    return true;
+  } else if (scorePlayerTwo >= 2) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
+    return true;
   } else {
-    window.requestAnimationFrame(mainLoop);
+    return false;
   }
 }
 
 function mainLoop () {
-  drawGame();
   movePlayers();
 
-  if (gameStarted) {
+  if (gameRunning) {
     moveBall();
-    countScores();
+    hasPlayerScored = countScores();
   }
-  isGameFinished();
+  if (!isGameFinished()) {
+    if (hasPlayerScored) {
+      resetBall();
+    }
+    window.requestAnimationFrame(mainLoop);
+  } else {
+    gameRunning = false;
+  }
+  drawGame();
 }
 mainLoop();
 
 function resetGame () {
   // Reset positions and scores when starting a new game
-  gameStarted = false;
+  gameRunning = false;
   scorePlayerOne = 0;
   scorePlayerTwo = 0;
   playerOneScoreBoard.innerText = scorePlayerOne;
