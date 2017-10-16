@@ -40,14 +40,15 @@ class Player {
     this.color = color;
     this.x = x;
     this.y = y;
+    this.backgroundColor = '#000000';
     this.height = 170;
     this.width = 30;
     this.velocity = { up: -7, down: 7 };
   }
 }
 
-const playerOne = new Player('#000000', 0, canvas.height / 2 - 100);
-const playerTwo = new Player('#000000', canvas.width - 30, canvas.height / 2 - 100);
+const playerOne = new Player('#7ED321', 0, canvas.height / 2 - 100);
+const playerTwo = new Player('#F8E71C', canvas.width - 30, canvas.height / 2 - 100);
 
 let playerOneButtons = {
   'AL': false,
@@ -93,12 +94,17 @@ function mainLoop () {
   context.fillRect(0, 0, canvas.width, canvas.height);
   // draw player one
   context.beginPath();
-  context.fillStyle = playerOne.color;
+  context.fillStyle = playerOne.backgroundColor;
   context.fillRect(playerOne.x, playerOne.y, playerOne.width, playerOne.height);
+  context.fillStyle = playerOne.color;
+  context.fillRect(playerOne.x+28, playerOne.y, playerOne.width/8, playerOne.height);
+
   // draw player two
   context.beginPath();
-  context.fillStyle = playerTwo.color;
+  context.fillStyle = playerTwo.backgroundColor;
   context.fillRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height);
+  context.fillStyle = playerTwo.color;
+  context.fillRect(playerTwo.x-2, playerTwo.y, playerTwo.width/8, playerTwo.height);
 
   // draw ball
   context.beginPath();
