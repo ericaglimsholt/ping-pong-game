@@ -12,3 +12,24 @@
 //     ws.send("client: ok");
 //   }
 // }
+
+// class Button {
+//   constructor(name, pressed, key){
+//     this.name = name;
+//     this.pressed = pressed;
+//     this.key = key;
+//
+//     window.addEventListener('keyUp', this.handleKeyUp.bind(this))
+//   }
+//
+//   handleKeyUp (event) {
+//     if (event.keyCode === this.key) {
+//       this.pressed = true
+//     }
+//   }
+// }
+//
+// const AL = new Button('AL', false, 65);
+// const AR = new Button('AR', false, 68);
+// const BL = new Button('BL', false, 37);
+// const BR = new Button('BR', false, 39);

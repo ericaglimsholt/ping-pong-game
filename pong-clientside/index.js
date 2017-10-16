@@ -7,23 +7,46 @@ const context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let playerOne = {
-  x: 0,
-  y: canvas.height / 2 - 100,
-  height: 200,
-  width: 30,
-  color: '#35999e',
-  velocity: { x: 0, y: 0 }
-};
+class Player {
+  constructor(color, x, y) {
+    this.color = color;
+    this.x = x;
+    this.y = y;
+    this.height = 200;
+    this.width = 30;
+    this.velocity = { up: -5, down: 5 };
+  }
+}
 
-let playerTwo = {
-  x: canvas.width - 30,
-  y: canvas.height / 2 - 100, // this.height / 2 ?
-  height: 200,
-  width: 30,
-  color: '#35999e',
-  velocity: { x: 5, y: 5 }
-};
+const playerOne = new Player('#35999e', 0, canvas.height / 2 - 100);
+const playerTwo = new Player('#35999e', canvas.width - 30, canvas.height / 2 - 100);
+
+let buttonPressedPlayerOne = null;
+let buttonPressedPlayerTwo = null;
+
+window.addEventListener('keydown', (event) => {
+  if (event.keyCode === 65) {
+    buttonPressedPlayerOne = 'AL'
+  }
+  if (event.keyCode === 68) {
+    buttonPressedPlayerOne = 'AR'
+  }
+  if (event.keyCode === 37) {
+    buttonPressedPlayerTwo = 'BL'
+  }
+  if (event.keyCode === 39) {
+    buttonPressedPlayerTwo = 'BR'
+  }
+});
+
+window.addEventListener('keyup', (event) => {
+  if (event.keyCode === 65 || event.keyCode === 68) {
+    buttonPressedPlayerOne = null;
+  }
+  if (event.keyCode === 37 || event.keyCode === 39) {
+    buttonPressedPlayerTwo = null;
+  }
+});
 
 (function mainLoop () {
   // set board background
@@ -38,6 +61,18 @@ let playerTwo = {
   context.fillStyle = playerTwo.color;
   context.fillRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height);
 
-  //playerTwo.y += playerTwo.velocity.y;
+  if (buttonPressedPlayerOne === 'AL') {
+    playerOne.y += playerOne.velocity.down;
+  }
+  if (buttonPressedPlayerOne === 'AR') {
+    playerOne.y += playerOne.velocity.up;
+  }
+  if (buttonPressedPlayerTwo === 'BL') {
+    playerTwo.y += playerTwo.velocity.down;
+  }
+  if (buttonPressedPlayerTwo === 'BR') {
+    playerTwo.y += playerTwo.velocity.up;
+  }
+
   window.requestAnimationFrame(mainLoop);
 })();
