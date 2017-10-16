@@ -1,13 +1,11 @@
 'use strict';
 
-// create canvas game board
+// Create canvas game board inside #canvas-wrap
 const canvas = document.createElement('canvas');
-document.body.appendChild(canvas);
+document.getElementById('canvas-wrap').appendChild(canvas);
 const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-// canvas.style.height = `${canvas.height / 2}px`;
-// canvas.style.width = `${canvas.width / 2}px`;
 
 // get all the html elements we need
 const startInstructionsBox = document.querySelector('.start')
@@ -27,7 +25,7 @@ function randomDirection (left, right) {
 // Create ball
 let ball = {
   radius: 20,
-  color: '#f2f2f2',
+  color: '#FFFFFF',
   x: canvas.width / 2,
   y: canvas.height / 2,
   velocity: {
@@ -42,13 +40,15 @@ class Player {
     this.color = color;
     this.x = x;
     this.y = y;
-    this.height = 200;
-    this.width = 15;
-    this.velocity = { up: -10, down: 10 };
+    this.backgroundColor = '#000000';
+    this.height = 170;
+    this.width = 30;
+    this.velocity = { up: -7, down: 7 };
   }
 }
-const playerOne = new Player('#00cc66', 0, canvas.height / 2 - 100);
-const playerTwo = new Player('#fff44f', canvas.width - 15, canvas.height / 2 - 100);
+
+const playerOne = new Player('#7ED321', 0, canvas.height / 2 - 100);
+const playerTwo = new Player('#F8E71C', canvas.width - 30, canvas.height / 2 - 100);
 
 let playerOneButtons = {
   'AL': false,
@@ -90,16 +90,21 @@ let scorePlayerTwo = 0;
 
 function mainLoop () {
   // draw board background
-  context.fillStyle = '#333';
+  context.fillStyle = '#1F1F1F';
   context.fillRect(0, 0, canvas.width, canvas.height);
   // draw player one
   context.beginPath();
-  context.fillStyle = playerOne.color;
+  context.fillStyle = playerOne.backgroundColor;
   context.fillRect(playerOne.x, playerOne.y, playerOne.width, playerOne.height);
+  context.fillStyle = playerOne.color;
+  context.fillRect(playerOne.x+28, playerOne.y, playerOne.width/8, playerOne.height);
+
   // draw player two
   context.beginPath();
-  context.fillStyle = playerTwo.color;
+  context.fillStyle = playerTwo.backgroundColor;
   context.fillRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height);
+  context.fillStyle = playerTwo.color;
+  context.fillRect(playerTwo.x-2, playerTwo.y, playerTwo.width/8, playerTwo.height);
 
   // draw ball
   context.beginPath();
