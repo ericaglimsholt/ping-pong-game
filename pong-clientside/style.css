@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Bern Sans';
+  src: url(../Bern-sans.otf);
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -34,8 +39,9 @@ body {
 }
 
 h2 {
-  font-size: 400px;
+  font-size: 360px;
   margin: 0;
+  font-family: 'Bern Sans';
 }
 
 /*.seperator {
