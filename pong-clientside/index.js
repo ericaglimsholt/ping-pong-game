@@ -188,11 +188,11 @@ function countScores () {
 
 function isGameFinished () {
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 2) {
+  if (scorePlayerOne >= 5) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
     return true;
-  } else if (scorePlayerTwo >= 2) {
+  } else if (scorePlayerTwo >= 5) {
     winnerBox.classList.add('show');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
     return true;
