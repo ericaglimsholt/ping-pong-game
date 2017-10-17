@@ -45,13 +45,6 @@ h2 {
   font-family: 'Bern Sans';
 }
 
-.seperator {
-  left: calc(50% - 2px);
-  border: 2px solid #000000;
-  position: absolute;
-  height: 100vh;
-}
-
 /*.score-board {
   position: fixed;
   top: 0;

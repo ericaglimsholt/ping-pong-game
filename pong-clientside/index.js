@@ -97,6 +97,10 @@ function drawGame () {
   context.fillStyle = '#1F1F1F';
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+  // draw center line
+  context.fillStyle = '#000';
+  context.fillRect(canvas.width / 2 - 1.5, 0, 3, canvas.height);
+
   // draw player one
   context.beginPath();
   context.fillStyle = playerOne.backgroundColor;
@@ -155,12 +159,17 @@ function moveBall () {
   if (ball.y <= ball.radius) {
     ball.velocity.y *= -1;
   }
-  // Check if the ball collides with player one
+  // Check if the ball collides with long side on player one
   if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - playerWidth <= ball.radius) {
     ball.velocity.x = Math.abs(ball.velocity.x - 1);
     ball.color = playerOne.color;
   }
-  // Check if the ball collides with player two
+  // Check if ball collides with player short sides on player one
+  // if (ball.y + ball.radius === playerOne.y && ball.x + ball.radius <= playerOne.x + playerOne.width) {
+  //     ball.velocity.x = Math.abs(ball.velocity.x - 1);
+  // }
+
+  // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
     ball.velocity.x = -ball.velocity.x - 1;
     ball.color = playerTwo.color;
