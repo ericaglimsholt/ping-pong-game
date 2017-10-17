@@ -18,7 +18,6 @@ body {
   height: 100vh;
   position: absolute;
   z-index: 1;
-
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -71,12 +70,13 @@ h2 {
   position: fixed;
   height: 100%;
   width: 100%;
-  /*top: 0;*/
+  top: 0;
   display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   color: #fff;
+  z-index: 10;
 }
 
 /*canvas {
