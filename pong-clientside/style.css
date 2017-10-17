@@ -44,7 +44,11 @@ h2 {
   margin: 0;
   font-family: 'Bern Sans';
 }
-
+.ball-button {
+  /*position: absolute;*/
+  width: 40px;
+  height: 40px;
+}
 /*.score-board {
   position: fixed;
   top: 0;
@@ -61,11 +65,10 @@ h2 {
 }*/
 .winner, .start {
   position: fixed;
-  height: 100%;
   width: 100%;
   top: 0;
   display: none;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   color: #fff;

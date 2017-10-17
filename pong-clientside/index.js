@@ -80,11 +80,10 @@ window.addEventListener('keyup', (event) => {
 
 // If press spacebar the game begin
 let gameRunning = false;
-window.addEventListener('keyup', (event) => {
-  if (event.keyCode === 32) {
-    startInstructionsBox.classList.remove('show');
-    gameRunning = true;
-  }
+let ballStart = document.querySelector('.ball-button');
+ballStart.addEventListener('click', (event) => {
+  startInstructionsBox.classList.remove('show');
+  gameRunning = true;
 });
 
 // Score counter
