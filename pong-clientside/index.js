@@ -1,13 +1,11 @@
 'use strict';
 
-// create canvas game board
+// Create canvas game board inside #canvas-wrap
 const canvas = document.createElement('canvas');
-document.body.appendChild(canvas);
+document.getElementById('canvas-wrap').appendChild(canvas);
 const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-// canvas.style.height = `${canvas.height / 2}px`;
-// canvas.style.width = `${canvas.width / 2}px`;
 
 // Get all the html elements needed
 const startInstructionsBox = document.querySelector('.start');
@@ -53,6 +51,7 @@ class Player {
 }
 const playerOne = new Player('#7ED321', 0, canvas.height / 2 - playerHeight / 2);
 const playerTwo = new Player('#F8E71C', canvas.width - playerWidth, canvas.height / 2 - playerHeight / 2);
+
 
 let playerOneButtons = {
   'left': false,
