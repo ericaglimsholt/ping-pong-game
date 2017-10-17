@@ -27,7 +27,7 @@ function randomDirection (left, right) {
 // Create ball
 let ball = {
   radius: 20,
-  color: '#f2f2f2',
+  color: '#ffffff',
   x: canvas.width / 2,
   y: canvas.height / 2,
   velocity: {
@@ -37,21 +37,22 @@ let ball = {
 };
 
 // Create player rackets
-const playerWidth = 15;
-const playerHeight = 200;
+const playerWidth = 30;
+const playerHeight = 170;
 
 class Player {
   constructor (color, x, y) {
     this.color = color;
+    this.backgroundColor = '#000000';
     this.x = x;
     this.y = y;
     this.height = playerHeight;
     this.width = playerWidth;
-    this.velocity = { up: -10, down: 10 };
+    this.velocity = { up: -7, down: 7 };
   }
 }
-const playerOne = new Player('#00cc66', 0, canvas.height / 2 - playerHeight / 2);
-const playerTwo = new Player('#fff44f', canvas.width - playerWidth, canvas.height / 2 - playerHeight / 2);
+const playerOne = new Player('#7ED321', 0, canvas.height / 2 - playerHeight / 2);
+const playerTwo = new Player('#F8E71C', canvas.width - playerWidth, canvas.height / 2 - playerHeight / 2);
 
 let playerOneButtons = {
   'left': false,
@@ -94,16 +95,21 @@ let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
-  context.fillStyle = '#333';
+  context.fillStyle = '#1F1F1F';
   context.fillRect(0, 0, canvas.width, canvas.height);
   // draw player one
   context.beginPath();
-  context.fillStyle = playerOne.color;
+  context.fillStyle = playerOne.backgroundColor;
   context.fillRect(playerOne.x, playerOne.y, playerOne.width, playerOne.height);
+  context.fillStyle = playerOne.color;
+  context.fillRect(playerOne.x + 28, playerOne.y, playerOne.width / 8, playerOne.height);
+
   // draw player two
   context.beginPath();
-  context.fillStyle = playerTwo.color;
+  context.fillStyle = playerTwo.backgroundColor;
   context.fillRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height);
+  context.fillStyle = playerTwo.color;
+  context.fillRect(playerTwo.x - 2, playerTwo.y, playerTwo.width / 8, playerTwo.height)
 
   // draw ball
   context.beginPath();
