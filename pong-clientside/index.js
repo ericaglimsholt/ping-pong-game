@@ -96,6 +96,7 @@ function drawGame () {
   // draw board background
   context.fillStyle = '#1F1F1F';
   context.fillRect(0, 0, canvas.width, canvas.height);
+
   // draw player one
   context.beginPath();
   context.fillStyle = playerOne.backgroundColor;
@@ -157,12 +158,21 @@ function moveBall () {
   // Check if the ball collides with player one
   if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - playerWidth <= ball.radius) {
     ball.velocity.x = Math.abs(ball.velocity.x - 1);
+    ball.color = playerOne.color;
+
+    scorePlayerOne++;
+    playerOneScoreBoard.innerText = scorePlayerOne;
   }
   // Check if the ball collides with player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
     ball.velocity.x = -ball.velocity.x - 1;
+    ball.color = playerTwo.color;
+
+    scorePlayerTwo++;
+    playerTwoScoreBoard.innerText = scorePlayerTwo;
   }
 }
+
 
 function resetBall () {
   // put ball back in the center to get ready for a new round
@@ -170,28 +180,30 @@ function resetBall () {
   ball.y = canvas.height / 2;
   ball.velocity.x = randomDirection(-4, 4);
   ball.velocity.y = randomInt(-4, 4);
+  ball.color = "#FFFFFF";
 }
 
-function countScores () {
-  // Start new round if one of the players misses the ball
-  if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
-    if (ball.x + ball.radius < 0) {
-      // add score to player two on score board
-      scorePlayerTwo++;
-      playerTwoScoreBoard.innerText = scorePlayerTwo;
-    } else {
-      // add score to player one on score board
-      scorePlayerOne++;
-      playerOneScoreBoard.innerText = scorePlayerOne;
-    }
-    gameRunning = false;
-    return true;
-  } else {
-    return false;
-  }
-}
+// function countScores () {
+//   // Start new round if one of the players misses the ball
+//   if (ball.x + ball.radius < 0 || ball.x - ball.radius > canvas.width) {
+//     if (ball.x + ball.radius < 0) {
+//       // add score to player two on score board
+//       scorePlayerTwo++;
+//       playerTwoScoreBoard.innerText = scorePlayerTwo;
+//     } else {
+//       // add score to player one on score board
+//       scorePlayerOne++;
+//       playerOneScoreBoard.innerText = scorePlayerOne;
+//     }
+//     gameRunning = false;
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
 function isGameFinished () {
+
   // Check if one of the players has 5 points, then the game is finished
   if (scorePlayerOne >= 5) {
     winnerBox.classList.add('show');
@@ -211,7 +223,7 @@ function mainLoop () {
 
   if (gameRunning) {
     moveBall();
-    hasPlayerScored = countScores();
+    // hasPlayerScored = countScores();
   }
   if (!isGameFinished()) {
     if (hasPlayerScored) {
