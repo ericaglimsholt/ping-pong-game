@@ -45,7 +45,7 @@ h2 {
 }
 
 .seperator {
-  left: 50%;
+  left: calc(50% - 2px);
   border: 2px solid #000000;
   position: absolute;
   height: 100vh;
@@ -69,6 +69,7 @@ h2 {
   position: fixed;
   height: 100%;
   width: 100%;
+  top: 0;
   display: none;
   justify-content: center;
   align-items: center;
