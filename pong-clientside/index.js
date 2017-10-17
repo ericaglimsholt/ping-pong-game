@@ -159,11 +159,9 @@ function moveBall () {
   if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - playerWidth <= ball.radius) {
     ball.velocity.x = Math.abs(ball.velocity.x - 1);
     ball.color = playerOne.color;
-    // include target score here
 
     scorePlayerOne++;
     playerOneScoreBoard.innerText = scorePlayerOne;
-
   }
   // Check if the ball collides with player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
@@ -172,9 +170,6 @@ function moveBall () {
 
     scorePlayerTwo++;
     playerTwoScoreBoard.innerText = scorePlayerTwo;
-
-
-    // include target score here
   }
 }
 
@@ -208,6 +203,7 @@ function resetBall () {
 // }
 
 function isGameFinished () {
+
   // Check if one of the players has 5 points, then the game is finished
   if (scorePlayerOne >= 5) {
     winnerBox.classList.add('show');
