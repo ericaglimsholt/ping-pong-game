@@ -206,12 +206,14 @@ function countScores () {
 function isGameFinished () {
 
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 5) {
+  if (scorePlayerOne >= 3) {
     winnerBox.classList.add('show');
+    winnerBox.classList.add('green');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
     return true;
-  } else if (scorePlayerTwo >= 5) {
+  } else if (scorePlayerTwo >= 3) {
     winnerBox.classList.add('show');
+    winnerBox.classList.add('yellow');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
     return true;
   } else {
@@ -247,6 +249,8 @@ function resetGame () {
   playerTwoScoreBoard.innerText = scorePlayerTwo;
 
   winnerBox.classList.remove('show');
+  winnerBox.classList.remove('green');
+  winnerBox.classList.remove('yellow');
   startInstructionsBox.classList.add('show');
 
   resetBall();
