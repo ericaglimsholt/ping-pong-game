@@ -1,35 +1,48 @@
 'use strict';
 
-// if ('WebSocket' in window) {
-//   const ws = new WebSocket('ws://localhost:8025/pong');
-//   ws.onopen = function () {
-//     //alert('connect to server');
-//     console.log('waiting for server');
-//   }
-//   ws.onmessage = function(event) {
-//     const buttonPush = JSON.parse(event.data);
-//     console.log(buttonPush);
-//     ws.send("client: ok");
-//   }
-// }
+let playerOneButtons = {
+  'left': false,
+  'right': false
+};
+let playerTwoButtons = {
+  'left': false,
+  'right': false
+};
 
-// class Button {
-//   constructor(name, pressed, key){
-//     this.name = name;
-//     this.pressed = pressed;
-//     this.key = key;
-//
-//     window.addEventListener('keyUp', this.handleKeyUp.bind(this))
-//   }
-//
-//   handleKeyUp (event) {
-//     if (event.keyCode === this.key) {
-//       this.pressed = true
-//     }
-//   }
-// }
-//
-// const AL = new Button('AL', false, 65);
-// const AR = new Button('AR', false, 68);
-// const BL = new Button('BL', false, 37);
-// const BR = new Button('BR', false, 39);
+if ('WebSocket' in window) {
+  const ws = new WebSocket('ws://localhost:8025/pong');
+  ws.onopen = function () {
+    console.log('Yay! connected to server.');
+  };
+  ws.onmessage = function (event) {
+    const pushedButton = event.data;
+    switch (pushedButton) {
+      case 'AL1':
+        playerOneButtons.left = true;
+        break;
+      case 'AL0':
+        playerOneButtons.left = false;
+        break;
+      case 'AR1':
+        playerOneButtons.right = true;
+        break;
+      case 'AR0':
+        playerOneButtons.right = false;
+        break;
+      case 'BL1':
+        playerTwoButtons.left = true;
+        break;
+      case 'BL0':
+        playerTwoButtons.left = false;
+        break;
+      case 'BR1':
+        playerTwoButtons.right = true;
+        break;
+      case 'BR0':
+        playerTwoButtons.right = false;
+        break;
+      default:
+        break;
+    }
+  };
+}
