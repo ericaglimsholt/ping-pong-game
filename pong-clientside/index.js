@@ -46,7 +46,7 @@ class Player {
     this.y = y;
     this.height = playerHeight;
     this.width = playerWidth;
-    this.velocity = { up: -7, down: 7 };
+    this.velocity = { decrease: -7, increase: 7 };
   }
 }
 const playerOne = new Player('#7ED321', 0, canvas.height / 2 - playerHeight / 2);
@@ -117,22 +117,22 @@ function movePlayers () {
   // players movement - move up and down on buttons click
   if (playerOneButtons.left) {
     if (playerOne.y > 0) {
-      playerOne.y += playerOne.velocity.up;
+      playerOne.y += playerOne.velocity.decrease;
     }
   }
   if (playerOneButtons.right) {
     if (playerOne.y + playerOne.height < canvas.height) {
-      playerOne.y += playerOne.velocity.down;
+      playerOne.y += playerOne.velocity.increase;
     }
   }
   if (playerTwoButtons.left) {
     if (playerTwo.y + playerTwo.height < canvas.height) {
-      playerTwo.y += playerTwo.velocity.down;
+      playerTwo.y += playerTwo.velocity.increase;
     }
   }
   if (playerTwoButtons.right) {
     if (playerTwo.y > 0) {
-      playerTwo.y += playerTwo.velocity.up;
+      playerTwo.y += playerTwo.velocity.decrease;
     }
   }
 }
