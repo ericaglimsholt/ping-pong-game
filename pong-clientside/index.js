@@ -52,33 +52,25 @@ class Player {
 const playerOne = new Player('#7ED321', 0, canvas.height / 2 - playerHeight / 2);
 const playerTwo = new Player('#F8E71C', canvas.width - playerWidth, canvas.height / 2 - playerHeight / 2);
 
-
-let playerOneButtons = {
-  'left': false,
-  'right': false
-};
-let playerTwoButtons = {
-  'left': false,
-  'right': false
-};
-
+// Uncomment this to play on keyboard instead of with arduino buttons.
+// Player one plays with 'a' and 'd' keys and player two plays with left and right arrow keys
 // If the players press the valid button, set button to true
-window.addEventListener('keydown', (event) => {
-  if (event.keyCode === 65) playerOneButtons.left = true;
-  if (event.keyCode === 68) playerOneButtons.right = true;
-  if (event.keyCode === 37) playerTwoButtons.left = true;
-  if (event.keyCode === 39) playerTwoButtons.right = true;
-});
+// window.addEventListener('keydown', (event) => {
+//   if (event.keyCode === 65) playerOneButtons.left = true;
+//   if (event.keyCode === 68) playerOneButtons.right = true;
+//   if (event.keyCode === 37) playerTwoButtons.left = true;
+//   if (event.keyCode === 39) playerTwoButtons.right = true;
+// });
+//
+// // Listen to the players keyup, set button to false
+// window.addEventListener('keyup', (event) => {
+//   if (event.keyCode === 65) playerOneButtons.left = false;
+//   if (event.keyCode === 68) playerOneButtons.right = false;
+//   if (event.keyCode === 37) playerTwoButtons.left = false;
+//   if (event.keyCode === 39) playerTwoButtons.right = false;
+// });
 
-// Listen to the players keyup, set button to false
-window.addEventListener('keyup', (event) => {
-  if (event.keyCode === 65) playerOneButtons.left = false;
-  if (event.keyCode === 68) playerOneButtons.right = false;
-  if (event.keyCode === 37) playerTwoButtons.left = false;
-  if (event.keyCode === 39) playerTwoButtons.right = false;
-});
-
-// If press spacebar the game begin
+// Click on ball to start game
 let gameRunning = false;
 let ballStart = document.querySelector('.ball-button');
 ballStart.addEventListener('click', (event) => {

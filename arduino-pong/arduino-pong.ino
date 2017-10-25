@@ -24,25 +24,22 @@ void loop() {
   if (OneLeftBtnVal != OneLeftNewVal) {
     OneLeftBtnVal = OneLeftNewVal;
     Serial.print("AL");
-    Serial.print(OneLeftBtnVal);
+    Serial.println(OneLeftBtnVal);
   }
   if (OneRightBtnVal != OneRightNewVal) {
     OneRightBtnVal = OneRightNewVal;
-    Serial.print(":");
     Serial.print("AR");
-    Serial.print(OneRightBtnVal);
+    Serial.println(OneRightBtnVal);
   }
   if (TwoLeftBtnVal != TwoLeftNewVal) {
     TwoLeftBtnVal = TwoLeftNewVal;
-    Serial.print(":");
     Serial.print("BL");
-    Serial.print(TwoLeftBtnVal);
+    Serial.println(TwoLeftBtnVal);
   }
   if (TwoRightBtnVal != TwoRightNewVal) {
     TwoRightBtnVal = TwoRightNewVal;
-    Serial.print(":");
     Serial.print("BR");
-    Serial.print(TwoRightBtnVal);
+    Serial.println(TwoRightBtnVal);
   }
 
   delay(50);
