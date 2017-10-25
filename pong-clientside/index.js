@@ -93,8 +93,8 @@ let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
-  context.fillStyle = '#1F1F1F';
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "rgba(0, 0, 0, 0.5)";
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw center line
   context.fillStyle = '#000';
@@ -173,6 +173,7 @@ function moveBall () {
 }
 
 function resetBoard () {
+
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
@@ -205,7 +206,6 @@ function countScores () {
 }
 
 function isGameFinished () {
-
   // Check if one of the players has 3 points, then the game is finished
   if (scorePlayerOne >= 3) {
     winnerBox.classList.add('show');
