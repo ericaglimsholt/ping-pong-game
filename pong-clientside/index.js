@@ -156,17 +156,17 @@ function moveBall () {
     ball.velocity.y *= -1;
   }
   let collision = false;
-  // If ball intersects the right vertical line of the player
+  // If ball intersects the right vertical line of player one
   if (ball.x - ball.radius <= playerWidth) {
     if (ball.y + ball.radius >= playerOne.y && ball.y <= playerOne.y) {
-      // If ball intersects the top horizontal line of player
-      ball.y = playerOne.y - ball.radius - 1;
+      // If ball intersects the top horizontal line of player one
+    //  ball.y = playerOne.y - ball.radius - 1;
       ball.velocity.y *= -1;
       console.log('intersects top');
       collision = true;
     } else if (ball.y - ball.radius <= playerOne.y + playerHeight && ball.y >= playerOne.y + playerHeight) {
-      // If ball intersects the bottom horizontal line of player
-      ball.y = playerOne.y + playerHeight + ball.radius + 1;
+      // If ball intersects the bottom horizontal line of player one
+    //  ball.y = playerOne.y + playerHeight + ball.radius + 1;
       ball.velocity.y *= -1;
       console.log('intersects bottom');
       collision = true;
@@ -181,10 +181,25 @@ function moveBall () {
       console.log('intersects longside');
     }
   }
-
+  // If ball intersects the left vertical line of player two
+  if (ball.x + ball.radius >= playerTwo.x) {
+    if (ball.y + ball.radius >= playerTwo.y && ball.y <= playerTwo.y) {
+      // If ball intersects the top horizontal line of player two
+    //  ball.y = playerTwo.y - ball.radius - 1;
+      ball.velocity.y *= -1;
+      console.log('intersects top');
+      collision = true;
+    } else if (ball.y - ball.radius <= playerTwo.y + playerHeight && ball.y >= playerTwo.y + playerHeight) {
+      // If ball intersects the bottom horizontal line of player two
+    //  ball.y = playerTwo.y + playerHeight + ball.radius + 1;
+      ball.velocity.y *= -1;
+      console.log('intersects bottom');
+      collision = true;
+    }
+  }
   // Check if the ball collides with long side on player two
   if (!collision && ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height) {
-    if (ball.x + ball.radius + playerWidth >= canvas.width) {
+    if (ball.x + ball.radius >= playerTwo.x) {
       ball.velocity.x = -ball.velocity.x - 1;
       ball.color = playerTwo.color;
     }
