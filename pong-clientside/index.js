@@ -163,19 +163,16 @@ function moveBall () {
     ball.velocity.x = Math.abs(ball.velocity.x - 1);
     ball.color = playerOne.color;
   }
-  // Check if ball collides with player short sides on player one
-  // if (ball.y + ball.radius === playerOne.y && ball.x + ball.radius <= playerOne.x + playerOne.width) {
-  //     ball.velocity.x = Math.abs(ball.velocity.x - 1);
-  // }
 
   // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
     ball.velocity.x = -ball.velocity.x - 1;
     ball.color = playerTwo.color;
   }
+
 }
 
-function resetBall () {
+function resetBoard () {
 
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
@@ -183,6 +180,10 @@ function resetBall () {
   ball.velocity.x = randomDirection(-4, 4);
   ball.velocity.y = randomInt(-4, 4);
   ball.color = "#FFFFFF";
+  
+  // reset players
+  playerOne.y = canvas.height / 2 - playerHeight / 2;
+  playerTwo.y = canvas.height / 2 - playerHeight / 2;
 }
 
 function countScores () {
@@ -205,7 +206,7 @@ function countScores () {
 }
 
 function isGameFinished () {
-  // Check if one of the players has 5 points, then the game is finished
+  // Check if one of the players has 3 points, then the game is finished
   if (scorePlayerOne >= 3) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('green');
@@ -230,7 +231,7 @@ function mainLoop () {
   }
   if (!isGameFinished()) {
     if (hasPlayerScored) {
-      resetBall();
+      resetBoard();
     }
     window.requestAnimationFrame(mainLoop);
   } else {
@@ -253,10 +254,7 @@ function resetGame () {
   winnerBox.classList.remove('yellow');
   startInstructionsBox.classList.add('show');
 
-  resetBall();
-  // reset players
-  playerOne.y = canvas.height / 2 - playerHeight / 2;
-  playerTwo.y = canvas.height / 2 - playerHeight / 2;
+  resetBoard();
 }
 
 restartButton.addEventListener('click', function (event) {
