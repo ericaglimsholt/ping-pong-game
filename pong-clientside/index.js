@@ -33,10 +33,6 @@ let ball = {
     y: randomInt(-4, 4)
   }
 };
-let playerOneTurn = false;
-if (ball.velocity.y < 0) {
-  playerOneTurn = true;
-}
 
 // Create player rackets
 const playerWidth = 30;
@@ -50,7 +46,7 @@ class Player {
     this.y = y;
     this.height = playerHeight;
     this.width = playerWidth;
-    this.velocity = { decrease: -7, increase: 7 };
+    this.velocity = 7;
   }
 }
 const playerOne = new Player('#7ED321', 0, canvas.height / 2 - playerHeight / 2);
@@ -89,7 +85,7 @@ let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
-  context.fillStyle = "rgba(0, 0, 0, 0.5)";
+//  context.fillStyle = 'rgba(0, 0, 0, 0.5)';
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw center line
@@ -121,22 +117,22 @@ function movePlayers () {
   // players movement - move up and down on buttons click
   if (playerOneButtons.left) {
     if (playerOne.y > 0) {
-      playerOne.y += playerOne.velocity.decrease;
+      playerOne.y -= playerOne.velocity;
     }
   }
   if (playerOneButtons.right) {
     if (playerOne.y + playerOne.height < canvas.height) {
-      playerOne.y += playerOne.velocity.increase;
+      playerOne.y += playerOne.velocity;
     }
   }
   if (playerTwoButtons.left) {
     if (playerTwo.y + playerTwo.height < canvas.height) {
-      playerTwo.y += playerTwo.velocity.increase;
+      playerTwo.y += playerTwo.velocity;
     }
   }
   if (playerTwoButtons.right) {
     if (playerTwo.y > 0) {
-      playerTwo.y += playerTwo.velocity.decrease;
+      playerTwo.y -= playerTwo.velocity;
     }
   }
 }
@@ -145,72 +141,76 @@ function movePlayers () {
 
 function moveBall () {
   // Update the x and y of the ball cordinates based on the velocity
-  // TODO: calculate with delta time
   ball.x += ball.velocity.x;
   ball.y += ball.velocity.y;
-  // Check if the ball collides at the bottom
+  // Check if the ball intersects at the bottom
   if (ball.y + ball.radius > canvas.height) {
     ball.velocity.y *= -1;
   }
-  // Check if the ball collides at the top
+  // Check if the ball intersects at the top
   if (ball.y <= ball.radius) {
     ball.velocity.y *= -1;
   }
-  // Check if the ball collides with long side on player one
-  if (ball.y + ball.radius > playerOne.y && ball.y - ball.radius < playerOne.y + playerOne.height) {
-    if (ball.x - playerWidth <= ball.radius) {
-      ball.velocity.x *= -1;
+  let collision = false;
+  // If ball intersects the right vertical line of player one
+  if (ball.x - ball.radius <= playerWidth) {
+    if (ball.y + ball.radius >= playerOne.y && ball.y <= playerOne.y) {
+      // If ball intersects the top horizontal line of player one
+      ball.y = playerOne.y - ball.radius - 1;
+      ball.velocity.y *= -1;
+      collision = true;
+    } else if (ball.y - ball.radius <= playerOne.y + playerHeight && ball.y >= playerOne.y + playerHeight) {
+      // If ball intersects the bottom horizontal line of player one
+      ball.y = playerOne.y + playerHeight + ball.radius + 1;
+      ball.velocity.y *= -1;
+      collision = true;
+    }
+  }
+  // Check if the ball intersects with long side on player one
+  if (!collision && ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height) {
+    if (ball.x - ball.radius <= playerWidth) {
+      ball.x = playerWidth + ball.radius + 1;
+      ball.velocity.x = -ball.velocity.x + 1;
       ball.color = playerOne.color;
     }
   }
-
-
-// // If ball intersects the right vertical line of the player
-//   if (ball.x - ball.radius <= playerWidth) {
-//     if (ball.y + ball.radius >= playerOne.y) {
-//       // If ball intersects the top horizontal line of player
-//       ball.y = playerOne.y - ball.radius;
-//       ball.velocity.y *= -1;
-//       ball.color = '#fff';
-//     } else if (ball.y - ball.radius <= playerOne.y + playerHeight) {
-//       // If ball intersects the bottom horizontal line of player
-//       ball.y = playerOne.y - playerHeight + ball.radius;
-//       ball.velocity.y *= -1;
-//       ball.color = '#fff';
-//     }
-//   }
-
-
-  // Check if the ball collides with long side on player two
-  if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
-    ball.velocity.x = -ball.velocity.x - 1;
-    ball.color = playerTwo.color;
+  // If ball intersects the left vertical line of player two
+  if (ball.x + ball.radius >= playerTwo.x) {
+    if (ball.y + ball.radius >= playerTwo.y && ball.y <= playerTwo.y) {
+      // If ball intersects the top horizontal line of player two
+      ball.y = playerTwo.y - ball.radius - 1;
+      ball.velocity.y *= -1;
+      collision = true;
+    } else if (ball.y - ball.radius <= playerTwo.y + playerHeight && ball.y >= playerTwo.y + playerHeight) {
+      // If ball intersects the bottom horizontal line of player two
+      ball.y = playerTwo.y + playerHeight + ball.radius + 1;
+      ball.velocity.y *= -1;
+      collision = true;
+    }
   }
-
+  // Check if the ball intersects with long side on player two
+  if (!collision && ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height) {
+    if (ball.x + ball.radius >= playerTwo.x) {
+      ball.x = playerTwo.x - ball.radius;
+      ball.velocity.x = -ball.velocity.x - 1;
+      ball.color = playerTwo.color;
+    }
+  }
 }
 
 function resetBoard () {
-
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
-  ball.color = "#FFFFFF";
+  ball.color = '#FFFFFF';
   ball.velocity.x = randomDirection(-4, 4);
   ball.velocity.y = randomInt(-4, 4);
 
-  // Conflict starts here
-  playerOneTurn = false;
-  if (ball.velocity.y < 0) {
-    playerOneTurn = true;
-  }
+  ball.color = '#FFFFFF';
 
-  ball.color = "#FFFFFF";
-  
   // reset players
   playerOne.y = canvas.height / 2 - playerHeight / 2;
   playerTwo.y = canvas.height / 2 - playerHeight / 2;
-
-  // Conflict ends here
 }
 
 function countScores () {
