@@ -89,8 +89,8 @@ let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
-  context.fillStyle = '#1F1F1F';
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "rgba(0, 0, 0, 0.5)";
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw center line
   context.fillStyle = '#000';
@@ -164,6 +164,7 @@ function moveBall () {
     }
   }
 
+
 // // If ball intersects the right vertical line of the player
 //   if (ball.x - ball.radius <= playerWidth) {
 //     if (ball.y + ball.radius >= playerOne.y) {
@@ -179,24 +180,37 @@ function moveBall () {
 //     }
 //   }
 
+
   // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
     ball.velocity.x = -ball.velocity.x - 1;
     ball.color = playerTwo.color;
   }
+
 }
 
-function resetBall () {
+function resetBoard () {
+
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
   ball.color = "#FFFFFF";
   ball.velocity.x = randomDirection(-4, 4);
   ball.velocity.y = randomInt(-4, 4);
+
+  // Conflict starts here
   playerOneTurn = false;
   if (ball.velocity.y < 0) {
     playerOneTurn = true;
   }
+
+  ball.color = "#FFFFFF";
+  
+  // reset players
+  playerOne.y = canvas.height / 2 - playerHeight / 2;
+  playerTwo.y = canvas.height / 2 - playerHeight / 2;
+
+  // Conflict ends here
 }
 
 function countScores () {
@@ -219,8 +233,7 @@ function countScores () {
 }
 
 function isGameFinished () {
-
-  // Check if one of the players has 5 points, then the game is finished
+  // Check if one of the players has 3 points, then the game is finished
   if (scorePlayerOne >= 3) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('green');
@@ -245,7 +258,7 @@ function mainLoop () {
   }
   if (!isGameFinished()) {
     if (hasPlayerScored) {
-      resetBall();
+      resetBoard();
     }
     window.requestAnimationFrame(mainLoop);
   } else {
@@ -268,10 +281,7 @@ function resetGame () {
   winnerBox.classList.remove('yellow');
   startInstructionsBox.classList.add('show');
 
-  resetBall();
-  // reset players
-  playerOne.y = canvas.height / 2 - playerHeight / 2;
-  playerTwo.y = canvas.height / 2 - playerHeight / 2;
+  resetBoard();
 }
 
 restartButton.addEventListener('click', function (event) {
