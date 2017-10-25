@@ -16,29 +16,33 @@ if ('WebSocket' in window) {
   };
   ws.onmessage = function (event) {
     const pushedButton = event.data;
-    if (pushedButton === 'AL1') {
-      playerOneButtons.left = true;
-    }
-    if (pushedButton === 'AL0') {
-      playerOneButtons.left = false;
-    }
-    if (pushedButton === 'AR1') {
-      playerOneButtons.right = true;
-    }
-    if (pushedButton === 'AR0') {
-      playerOneButtons.right = false;
-    }
-    if (pushedButton === 'BL1') {
-      playerTwoButtons.left = true;
-    }
-    if (pushedButton === 'BL0') {
-      playerTwoButtons.left = false;
-    }
-    if (pushedButton === 'BR1') {
-      playerTwoButtons.right = true;
-    }
-    if (pushedButton === 'BR0') {
-      playerTwoButtons.right = false;
+    switch (pushedButton) {
+      case 'AL1':
+        playerOneButtons.left = true;
+        break;
+      case 'AL0':
+        playerOneButtons.left = false;
+        break;
+      case 'AR1':
+        playerOneButtons.right = true;
+        break;
+      case 'AR0':
+        playerOneButtons.right = false;
+        break;
+      case 'BL1':
+        playerTwoButtons.left = true;
+        break;
+      case 'BL0':
+        playerTwoButtons.left = false;
+        break;
+      case 'BR1':
+        playerTwoButtons.right = true;
+        break;
+      case 'BR0':
+        playerTwoButtons.right = false;
+        break;
+      default:
+        break;
     }
   };
 }
