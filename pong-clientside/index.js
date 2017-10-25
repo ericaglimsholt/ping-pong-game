@@ -176,7 +176,7 @@ function moveBall () {
 }
 
 function resetBall () {
-  
+
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
@@ -205,14 +205,13 @@ function countScores () {
 }
 
 function isGameFinished () {
-
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 1) {
+  if (scorePlayerOne >= 3) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('green');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
     return true;
-  } else if (scorePlayerTwo >= 1) {
+  } else if (scorePlayerTwo >= 3) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('yellow');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
