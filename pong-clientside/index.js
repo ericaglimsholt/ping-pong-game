@@ -79,12 +79,12 @@ window.addEventListener('keyup', (event) => {
 });
 
 // If press spacebar the game begin
-let gameRunning = false;
-let ballStart = document.querySelector('.ball-button');
-ballStart.addEventListener('click', (event) => {
-  startInstructionsBox.classList.remove('show');
-  gameRunning = true;
-});
+let gameRunning = true;
+// let ballStart = document.querySelector('.ball-button');
+// ballStart.addEventListener('click', (event) => {
+//   startInstructionsBox.classList.remove('show');
+//   gameRunning = true;
+// });
 
 // Score counter
 let scorePlayerOne = 0;
@@ -93,8 +93,8 @@ let hasPlayerScored = false;
 
 function drawGame () {
   // draw board background
-  context.fillStyle = '#1F1F1F';
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "rgba(0, 0, 0, 0.5)";
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw center line
   context.fillStyle = '#000';
@@ -206,15 +206,17 @@ function countScores () {
 function isGameFinished () {
 
   // Check if one of the players has 5 points, then the game is finished
-  if (scorePlayerOne >= 3) {
+  if (scorePlayerOne >= 1) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('green');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
+    playerTwoScoreBoard.color = playerTwo.color;
     return true;
-  } else if (scorePlayerTwo >= 3) {
+  } else if (scorePlayerTwo >= 1) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('yellow');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
+    playerTwoScoreBoard.color = playerTwo.color;
     return true;
   } else {
     return false;
