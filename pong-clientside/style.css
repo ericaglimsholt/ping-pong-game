@@ -62,10 +62,23 @@ h2 {
   flex-direction: column;
   color: #fff;
   z-index: 10;
+  font-family: 'Bern Sans';
+}
+
+.restart {
+  border: none;
+  background: white;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 0.7em;
+  padding-bottom: .5em;
+  font-family: 'Bern Sans';
+  font-size: 17px;
 }
 
 .winner p {
   font-size: 30px;
+  margin-bottom: 10px;
 }
 .start p {
   width: 80%;
@@ -74,4 +87,5 @@ h2 {
 }
 .show {
   display: flex;
+  margin-top: 1em;
 }

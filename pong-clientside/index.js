@@ -176,6 +176,7 @@ function moveBall () {
 }
 
 function resetBall () {
+  
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
@@ -210,13 +211,11 @@ function isGameFinished () {
     winnerBox.classList.add('show');
     winnerBox.classList.add('green');
     winnerBox.firstChild.innerText = 'Green player is the winner!';
-    playerTwoScoreBoard.color = playerTwo.color;
     return true;
   } else if (scorePlayerTwo >= 1) {
     winnerBox.classList.add('show');
     winnerBox.classList.add('yellow');
     winnerBox.firstChild.innerText = 'Yellow  player is the winner!';
-    playerTwoScoreBoard.color = playerTwo.color;
     return true;
   } else {
     return false;
