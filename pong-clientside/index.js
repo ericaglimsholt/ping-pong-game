@@ -163,23 +163,13 @@ function moveBall () {
     ball.velocity.x = Math.abs(ball.velocity.x - 1);
     ball.color = playerOne.color;
   }
-  // Check if ball collides with player short sides on player one
-  // if (ball.x + ball.radius < playerWidth && ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height) {
-  //     ball.velocity.x = Math.abs(ball.velocity.x - 1);
-  //     ball.color = '#fff';
-  // }
 
   // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
     ball.velocity.x = -ball.velocity.x - 1;
     ball.color = playerTwo.color;
   }
-  
-  // Check if ball collides with player short sides on player two
-  // if (ball.y + ball.radius === playerTwo.y && ball.x + ball.radius <= playerTwo.x + playerTwo.width) {
-  //     ball.velocity.x = Math.abs(ball.velocity.x - 1);
-  //     ball.color = playerTwo.color;
-  // }
+
 }
 
 function resetBoard () {
