@@ -33,6 +33,10 @@ let ball = {
     y: randomInt(-4, 4)
   }
 };
+let playerOneTurn = false;
+if (ball.velocity.y < 0) {
+  playerOneTurn = true;
+}
 
 // Create player rackets
 const playerWidth = 30;
@@ -137,6 +141,8 @@ function movePlayers () {
   }
 }
 
+
+
 function moveBall () {
   // Update the x and y of the ball cordinates based on the velocity
   // TODO: calculate with delta time
@@ -151,14 +157,23 @@ function moveBall () {
     ball.velocity.y *= -1;
   }
   // Check if the ball collides with long side on player one
-  if (ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height && ball.x - playerWidth <= ball.radius) {
-    ball.velocity.x = Math.abs(ball.velocity.x - 1);
-    ball.color = playerOne.color;
+  if (ball.y + ball.radius > playerOne.y && ball.y - ball.radius < playerOne.y + playerOne.height) {
+    if (ball.x - playerWidth <= ball.radius) {
+
+        ball.velocity.x *= -1;
+        ball.color = playerOne.color;
+
+      }
+    }
+
+  // If ball intersects the right vertical line of the player
+  if (ball.x - ball.radius <= playerWidth) {
+    // If ball intersects the top or bottom horizontal line of player
+    if (ball.y + ball.radius >= playerOne.x || ball.y - ball.radius <= playerOne.y + playerHeight) {
+      ball.velocity.y *= -1;
+      ball.color = '#fff';
+    }
   }
-  // Check if ball collides with player short sides on player one
-  // if (ball.y + ball.radius === playerOne.y && ball.x + ball.radius <= playerOne.x + playerOne.width) {
-  //     ball.velocity.x = Math.abs(ball.velocity.x - 1);
-  // }
 
   // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
@@ -167,13 +182,18 @@ function moveBall () {
   }
 }
 
+
 function resetBall () {
   // put ball back in the center to get ready for a new round
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
+  ball.color = "#FFFFFF";
   ball.velocity.x = randomDirection(-4, 4);
   ball.velocity.y = randomInt(-4, 4);
-  ball.color = "#FFFFFF";
+  playerOneTurn = false;
+  if (ball.velocity.y < 0) {
+    playerOneTurn = true;
+  }
 }
 
 function countScores () {
