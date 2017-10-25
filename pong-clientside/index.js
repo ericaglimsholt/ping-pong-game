@@ -56,9 +56,6 @@ const playerTwo = new Player('#F8E71C', canvas.width - playerWidth, canvas.heigh
 // Player one plays with 'a' and 'd' keys and player two plays with left and right arrow keys
 // If the players press the valid button, set button to true
 window.addEventListener('keydown', (event) => {
-  if (event.keyCode === 69) {
-    playerOne.y = ball.y + ball.radius;
-  }
   if (event.keyCode === 65) playerOneButtons.left = true;
   if (event.keyCode === 68) playerOneButtons.right = true;
   if (event.keyCode === 37) playerTwoButtons.left = true;
@@ -160,13 +157,13 @@ function moveBall () {
   if (ball.x - ball.radius <= playerWidth) {
     if (ball.y + ball.radius >= playerOne.y && ball.y <= playerOne.y) {
       // If ball intersects the top horizontal line of player one
-    //  ball.y = playerOne.y - ball.radius - 1;
+      ball.y = playerOne.y - ball.radius - 1;
       ball.velocity.y *= -1;
       console.log('intersects top');
       collision = true;
     } else if (ball.y - ball.radius <= playerOne.y + playerHeight && ball.y >= playerOne.y + playerHeight) {
       // If ball intersects the bottom horizontal line of player one
-    //  ball.y = playerOne.y + playerHeight + ball.radius + 1;
+      ball.y = playerOne.y + playerHeight + ball.radius + 1;
       ball.velocity.y *= -1;
       console.log('intersects bottom');
       collision = true;
@@ -175,8 +172,8 @@ function moveBall () {
   // Check if the ball collides with long side on player one
   if (!collision && ball.y + ball.radius >= playerOne.y && ball.y - ball.radius <= playerOne.y + playerOne.height) {
     if (ball.x - ball.radius <= playerWidth) {
-      //  ball.x = playerWidth + ball.radius + 1;
-      ball.velocity.x *= -1;
+      ball.x = playerWidth + ball.radius + 1;
+      ball.velocity.x = -ball.velocity.x + 1;
       ball.color = playerOne.color;
       console.log('intersects longside');
     }
@@ -185,13 +182,13 @@ function moveBall () {
   if (ball.x + ball.radius >= playerTwo.x) {
     if (ball.y + ball.radius >= playerTwo.y && ball.y <= playerTwo.y) {
       // If ball intersects the top horizontal line of player two
-    //  ball.y = playerTwo.y - ball.radius - 1;
+      ball.y = playerTwo.y - ball.radius - 1;
       ball.velocity.y *= -1;
       console.log('intersects top');
       collision = true;
     } else if (ball.y - ball.radius <= playerTwo.y + playerHeight && ball.y >= playerTwo.y + playerHeight) {
       // If ball intersects the bottom horizontal line of player two
-    //  ball.y = playerTwo.y + playerHeight + ball.radius + 1;
+      ball.y = playerTwo.y + playerHeight + ball.radius + 1;
       ball.velocity.y *= -1;
       console.log('intersects bottom');
       collision = true;
@@ -200,6 +197,7 @@ function moveBall () {
   // Check if the ball collides with long side on player two
   if (!collision && ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height) {
     if (ball.x + ball.radius >= playerTwo.x) {
+      ball.x = playerTwo.x - ball.radius;
       ball.velocity.x = -ball.velocity.x - 1;
       ball.color = playerTwo.color;
     }
