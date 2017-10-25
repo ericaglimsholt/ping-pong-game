@@ -24,6 +24,5 @@ void draw() {}
 void serialEvent(Serial port) 
 {
   String value = trim(port.readString());
-  //println(value);
   ws.sendMessage(value);
 }

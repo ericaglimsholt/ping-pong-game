@@ -117,12 +117,12 @@ function movePlayers () {
   // players movement - move up and down on buttons click
   if (playerOneButtons.left) {
     if (playerOne.y + playerOne.height < canvas.height) {
-      playerOne.y += playerOne.velocity.down;
+      playerOne.y += playerOne.velocity.up;
     }
   }
   if (playerOneButtons.right) {
     if (playerOne.y > 0) {
-      playerOne.y += playerOne.velocity.up;
+      playerOne.y += playerOne.velocity.down;
     }
   }
   if (playerTwoButtons.left) {
