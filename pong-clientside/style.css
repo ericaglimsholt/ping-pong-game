@@ -59,9 +59,11 @@ h2 {
   font-family: 'Bern Sans';
 }
 .ball-button {
-  /*position: absolute;*/
+  position: absolute;
   width: 60px;
   height: 60px;
+  left: 47%;
+  top: 47%;
 }
 /*.score-board {
   position: fixed;

@@ -79,12 +79,12 @@ window.addEventListener('keyup', (event) => {
 });
 
 // If press spacebar the game begin
-let gameRunning = true;
-// let ballStart = document.querySelector('.ball-button');
-// ballStart.addEventListener('click', (event) => {
-//   startInstructionsBox.classList.remove('show');
-//   gameRunning = true;
-// });
+let gameRunning = false;
+let ballStart = document.querySelector('.ball-button');
+ballStart.addEventListener('click', (event) => {
+  startInstructionsBox.classList.remove('show');
+  gameRunning = true;
+});
 
 // Score counter
 let scorePlayerOne = 0;
