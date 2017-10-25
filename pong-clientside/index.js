@@ -159,21 +159,25 @@ function moveBall () {
   // Check if the ball collides with long side on player one
   if (ball.y + ball.radius > playerOne.y && ball.y - ball.radius < playerOne.y + playerOne.height) {
     if (ball.x - playerWidth <= ball.radius) {
-
-        ball.velocity.x *= -1;
-        ball.color = playerOne.color;
-
-      }
-    }
-
-  // If ball intersects the right vertical line of the player
-  if (ball.x - ball.radius <= playerWidth) {
-    // If ball intersects the top or bottom horizontal line of player
-    if (ball.y + ball.radius >= playerOne.x || ball.y - ball.radius <= playerOne.y + playerHeight) {
-      ball.velocity.y *= -1;
-      ball.color = '#fff';
+      ball.velocity.x *= -1;
+      ball.color = playerOne.color;
     }
   }
+
+// // If ball intersects the right vertical line of the player
+//   if (ball.x - ball.radius <= playerWidth) {
+//     if (ball.y + ball.radius >= playerOne.y) {
+//       // If ball intersects the top horizontal line of player
+//       ball.y = playerOne.y - ball.radius;
+//       ball.velocity.y *= -1;
+//       ball.color = '#fff';
+//     } else if (ball.y - ball.radius <= playerOne.y + playerHeight) {
+//       // If ball intersects the bottom horizontal line of player
+//       ball.y = playerOne.y - playerHeight + ball.radius;
+//       ball.velocity.y *= -1;
+//       ball.color = '#fff';
+//     }
+//   }
 
   // Check if the ball collides with long side on player two
   if (ball.y + ball.radius >= playerTwo.y && ball.y - ball.radius <= playerTwo.y + playerTwo.height && ball.x + ball.radius + playerWidth >= canvas.width) {
@@ -181,7 +185,6 @@ function moveBall () {
     ball.color = playerTwo.color;
   }
 }
-
 
 function resetBall () {
   // put ball back in the center to get ready for a new round
