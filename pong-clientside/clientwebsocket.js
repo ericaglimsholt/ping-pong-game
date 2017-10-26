@@ -10,7 +10,7 @@ let playerTwoButtons = {
 };
 
 if ('WebSocket' in window) {
-  const ws = new WebSocket('ws://localhost:8025/pong');
+  const ws = new WebSocket('ws://172.17.12.27:8025/pong');
   ws.onopen = function () {
     console.log('Yay! connected to server.');
   };
